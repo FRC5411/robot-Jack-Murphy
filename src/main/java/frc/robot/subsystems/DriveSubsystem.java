@@ -33,7 +33,9 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        robotDrive.arcadeDrive(speed, rotation);
+        double driveRotation = rotation * rotation;
+
+        robotDrive.arcadeDrive(speed, driveRotation);
     }
 
     @Override

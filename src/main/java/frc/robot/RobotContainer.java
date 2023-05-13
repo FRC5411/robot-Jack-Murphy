@@ -34,12 +34,12 @@ public class RobotContainer {
   private void configureBindings() {
     // Rotate out
     controller.y().whileTrue(new InstantCommand( () -> {
-      robotOuttake.rotateOuttake(1);
+      robotOuttake.rotateOuttake(0.5);
     }));
 
     // Rotate in
     controller.a().whileTrue(new InstantCommand( () -> {
-      robotOuttake.rotateOuttake(-1);
+      robotOuttake.rotateOuttake(0.0);
     }));
   }
 
