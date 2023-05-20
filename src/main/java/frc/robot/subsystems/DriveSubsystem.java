@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Globals.DriveState;
 
 public class DriveSubsystem extends SubsystemBase{
 
@@ -33,9 +34,14 @@ public class DriveSubsystem extends SubsystemBase{
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        double driveRotation = rotation * rotation;
+        // Rotation Reduction
+        double driveRotation = (rotation > 0) ? rotation * -rotation : rotation * rotation;
 
-        robotDrive.arcadeDrive(speed, driveRotation);
+        // If Sniper
+        double driveSpeed = (DriveState.isSniper) ? speed * 0.5 : speed;
+        driveRotation = (DriveState.isSniper) ? driveRotation * 0.5 : driveRotation;
+
+        robotDrive.arcadeDrive(driveSpeed, driveRotation);
     }
 
     @Override
