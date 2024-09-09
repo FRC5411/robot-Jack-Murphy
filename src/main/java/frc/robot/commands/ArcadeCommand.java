@@ -3,10 +3,10 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class ArcadeCommand extends CommandBase {
+public class ArcadeCommand extends Command {
 
     private DriveSubsystem robotDrive;
 

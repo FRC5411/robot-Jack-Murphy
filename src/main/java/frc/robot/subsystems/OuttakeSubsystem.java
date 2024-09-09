@@ -11,15 +11,13 @@ public class OuttakeSubsystem extends SubsystemBase {
     public OuttakeSubsystem() {
         outtakeMotor = new Servo(0);
 
-        outtakeMotor.setPosition(0);
-        outtakeMotor.setBounds(2.7, 0, 0, 0, 1);        
+        outtakeMotor.setPosition(0);        
     }
 
     public OuttakeSubsystem(int channel) {
         outtakeMotor = new Servo(channel);
 
         outtakeMotor.setPosition(0);
-        outtakeMotor.setBounds(2.7, 0, 0, 0, 1);
     }
 
     public void outtakeOut() {
