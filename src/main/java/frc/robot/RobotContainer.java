@@ -21,20 +21,27 @@ public class RobotContainer {
 
   public RobotContainer() {
     robotDrive = new DriveSubsystem();
-    robotOuttake = new OuttakeSubsystem(0);
 
     controller = new CommandXboxController(0);
-    joystick = new CommandJoystick(2);
+    joystick = new CommandJoystick(0);
 
     robotDrive.setDefaultCommand(new ArcadeCommand( 
       //() -> controller.getLeftY(),
       //() -> controller.getRightX(),
-      () -> joystick.getRawAxis(1),
-      () -> joystick.getRawAxis(4),
+      () -> applyDeadband(controller.getLeftY()),
+      () -> applyDeadband(controller.getRightX()),
       robotDrive
     ));
 
     configureBindings();
+  }
+
+  private double applyDeadband(double val){
+    if(val > 0.4){
+      return val;
+    }
+
+    return 0;
   }
 
   private void configureBindings() {
