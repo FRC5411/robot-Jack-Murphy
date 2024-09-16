@@ -1,103 +1,34 @@
-// In Java We Trust
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Globals.DriveState;
-import frc.robot.commands.ArcadeCommand;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.OuttakeSubsystem;
+import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.DrivebaseSubsystem;
 
 public class RobotContainer {
+  private DrivebaseSubsystem robotDrive; 
+  private CommandXboxController driveController;
+    public RobotContainer() {
+    robotDrive = new DrivebaseSubsystem();
+    driveController = new CommandXboxController(0);
+    
 
-  private DriveSubsystem robotDrive;
-  private OuttakeSubsystem robotOuttake;
-
-  private CommandXboxController controller;
-  private CommandJoystick joystick;
-
-  public RobotContainer() {
-    robotDrive = new DriveSubsystem();
-
-    controller = new CommandXboxController(0);
-    joystick = new CommandJoystick(0);
-
-    robotDrive.setDefaultCommand(new ArcadeCommand( 
-      //() -> controller.getLeftY(),
-      //() -> controller.getRightX(),
-      () -> applyDeadband(controller.getLeftY()),
-      () -> applyDeadband(controller.getRightX()),
-      robotDrive
-    ));
+    robotDrive.setDefaultCommand(
+      new DriveCommand(
+        () -> -driveController.getLeftY(), 
+        () -> -driveController.getRightX(), 
+        robotDrive));
 
     configureBindings();
   }
 
-  private double applyDeadband(double val){
-    if(val > 0.4){
-      return val;
-    }
-
-    return 0;
-  }
-
-  private void configureBindings() {
-    // Rotate out
-    controller.y()
-    .whileTrue(new InstantCommand( () -> {
-      robotOuttake.outtakeOut();
-    }))
-    .whileFalse(new InstantCommand( () -> {
-      robotOuttake.noOuttake();
-    }));
-
-    // Rotate in
-    controller.a()
-    .whileTrue(new InstantCommand( () -> {
-      robotOuttake.outtakeIn();
-    }))
-    .whileFalse(new InstantCommand( () -> { 
-      robotOuttake.noOuttake();
-    }));
-
-
-    // A
-    joystick.button(1)
-    .whileTrue(new InstantCommand( () -> {
-      robotOuttake.outtakeOut();
-    }))
-    .whileFalse(new InstantCommand( () -> {
-      robotOuttake.noOuttake();
-    }));
-
-    // B
-    joystick.button(2)
-    .whileTrue(new InstantCommand( () -> {
-      robotOuttake.outtakeIn();
-    }))
-    .whileFalse(new InstantCommand( () -> { 
-      robotOuttake.noOuttake();
-    }));
-
-    // X
-    joystick.button(3)
-    .onTrue(new InstantCommand( () -> {
-      DriveState.isSniper = true;
-    }))
-    .onFalse(new InstantCommand( () -> {}));
-
-    // Y
-    joystick.button(4)
-    .onTrue(new InstantCommand( () -> {
-      DriveState.isSniper = false;
-    }))
-    .onFalse(new InstantCommand( () -> {}));
-  }
+  private void configureBindings() {}
 
   public Command getAutonomousCommand() {
-    return null;
+    return Commands.print("No autonomous command configured");
   }
 }
