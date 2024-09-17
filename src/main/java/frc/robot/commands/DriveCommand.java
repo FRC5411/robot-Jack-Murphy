@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DrivebaseSubsystem;
 
 public class DriveCommand extends Command {
-  private DoubleSupplier leftSupplier;
-  private DoubleSupplier rightSupplier;
+  private DoubleSupplier m_speed;
+  private DoubleSupplier m_rotation;
   private DrivebaseSubsystem m_drive;
-  public DriveCommand(DoubleSupplier leftSupplier, DoubleSupplier rightSupplier, DrivebaseSubsystem drive) {
-    this.leftSupplier = leftSupplier;
-    this.rightSupplier = rightSupplier;
+  public DriveCommand(DoubleSupplier speed, DoubleSupplier rotation, DrivebaseSubsystem drive) {
+    m_speed = speed;
+    m_rotation = rotation;
     m_drive = drive;
     addRequirements(m_drive);
   }
@@ -27,9 +27,13 @@ public class DriveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double leftSpeed = leftSupplier.getAsDouble();
-    double rightSpeed = rightSupplier.getAsDouble() * 0.5;
-    m_drive.tankDrive(leftSpeed, rightSpeed);
+    double speedDouble = m_speed.getAsDouble();
+    double rotationDouble = m_rotation.getAsDouble();
+    
+    if(Math.abs(speedDouble) < 0.1) speedDouble = 0;
+    if(Math.abs(rotationDouble) < 0.1) rotationDouble = 0;
+
+    m_drive.arcadeCmd(m_speed.getAsDouble() , m_rotation.getAsDouble() * 1.1);
   }
 
   // Called once the command ends or is interrupted.

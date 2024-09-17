@@ -1,15 +1,18 @@
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DrivebaseSubsystem extends SubsystemBase{
+    //backleft is messed up
     private static PWMVictorSPX frontLeft;
     private static PWMVictorSPX frontRight;
     private static PWMVictorSPX backLeft;
     private static PWMVictorSPX backRight;
+    private static DifferentialDrive m_Drive;
 
     public DrivebaseSubsystem(){
         frontLeft = new PWMVictorSPX(2);
@@ -17,10 +20,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
         backLeft = new PWMVictorSPX(4);
         backRight = new PWMVictorSPX(1);
 
-        //restoring factory defaults removes and changes such as inverts and follows so this should alwways be applied before hand
-
-        backLeft.addFollower(frontLeft);
-        backRight.addFollower(frontRight);
+        frontLeft.addFollower(backLeft);
+        frontRight.addFollower(backRight);
 
         frontRight.setInverted(true);
         backRight.setInverted(true);
@@ -29,6 +30,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
         // configureMotors(frontRight);
         // configureMotors(backLeft);
         // configureMotors(backRight);
+
+        m_Drive = new DifferentialDrive(frontLeft, frontRight);
     }
 
     // public static void configureMotors(PWMVictorSPX motor){
@@ -38,8 +41,7 @@ public class DrivebaseSubsystem extends SubsystemBase{
     //     motor.burnFlash();
     // }
 
-    public void tankDrive(double leftSpeed, double rightSpeed){
-        frontLeft.set(leftSpeed);
-        frontRight.set(rightSpeed);
+    public void arcadeCmd(double speed, double rotation){
+        m_Drive.arcadeDrive(speed,rotation);
     }
 }
