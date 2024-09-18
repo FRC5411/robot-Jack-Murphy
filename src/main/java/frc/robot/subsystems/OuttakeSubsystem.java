@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class OuttakeSubsystem extends SubsystemBase {
     private Servo outtakeMotor;
     public OuttakeSubsystem() {
-        outtakeMotor = new Servo(0);
+        outtakeMotor = new Servo(9);
         outtakeMotor.setPosition(0);
     }
     public OuttakeSubsystem(int channel) {

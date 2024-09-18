@@ -31,10 +31,11 @@ public class DriveCommand extends Command {
     double rotationDouble = m_rotation.getAsDouble();
     
     if(Math.abs(speedDouble) < 0.1) speedDouble = 0;
-    if(Math.abs(rotationDouble) < 0.1) rotationDouble = 0;
+    if(Math.abs(rotationDouble) < 0.1) rotationDouble = 0; 
 
-    m_drive.arcadeCmd(m_speed.getAsDouble() , m_rotation.getAsDouble() * 1.1);
+    m_drive.arcadeCmd(m_speed.getAsDouble() , m_rotation.getAsDouble());
   }
+  
 
   // Called once the command ends or is interrupted.
   @Override

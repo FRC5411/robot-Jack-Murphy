@@ -24,8 +24,8 @@ public class DrivebaseSubsystem extends SubsystemBase{
         frontRight.addFollower(backRight);
 
         frontRight.setInverted(true);
-        backRight.setInverted(true);
-        
+        // backRight.setInverted(true);
+         
         // configureMotors(frontLeft);
         // configureMotors(frontRight);
         // configureMotors(backLeft);
