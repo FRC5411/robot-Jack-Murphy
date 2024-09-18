@@ -33,8 +33,12 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driveController.leftBumper().whileTrue(new InstantCommand(outtake.outtakeIn()));
+    driveController.leftBumper().whileTrue(new InstantCommand(() -> outtake.outtakeIn()));
+     driveController.leftBumper().whileFalse(new InstantCommand(() -> outtake.noOuttake()));
+     driveController.rightBumper().whileTrue(new InstantCommand(() -> outtake.outtakeOut()));
+     driveController.rightBumper().whileFalse(new InstantCommand(() -> outtake.noOuttake()));
   }
+
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");

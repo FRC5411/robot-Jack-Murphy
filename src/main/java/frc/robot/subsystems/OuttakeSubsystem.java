@@ -15,7 +15,7 @@ public class OuttakeSubsystem extends SubsystemBase {
         outtakeMotor.setAngle(180);
     }
     public void outtakeIn() {
-        outtakeMotor.setAngle(10);
+        outtakeMotor.setAngle(5);
     }
     public void noOuttake() {
         outtakeMotor.setDisabled();;
