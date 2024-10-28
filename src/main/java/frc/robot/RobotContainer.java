@@ -7,6 +7,7 @@ import java.net.BindException;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DrivebaseSubsystem;
@@ -26,14 +27,18 @@ public class RobotContainer {
         () -> -driveController.getLeftY(), 
         () -> -driveController.getRightX(), 
         robotDrive));
- 
-    configureButtonBindings();
+
     */
+
+    configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-    if(driveController.x().getAsBoolean()) {robotDispenser.setMotor(1);}
-    else {robotDispenser.setMotor(-1);}
+    driveController.rightTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(0.4);}, robotDispenser));
+    driveController.rightTrigger().onFalse(new InstantCommand(() -> {robotDispenser.setMotor(0);}, robotDispenser));
+
+    driveController.leftTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(-0.4);}, robotDispenser));
+    driveController.leftTrigger().onFalse(new InstantCommand(() -> {robotDispenser.setMotor(0);}, robotDispenser));
   }
 
   public Command getAutonomousCommand() {
