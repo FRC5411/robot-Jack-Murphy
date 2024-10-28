@@ -7,7 +7,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 
 public class DrivebaseSubsystem extends SubsystemBase{
     private static PWMVictorSPX frontLeft;
@@ -23,7 +23,6 @@ public class DrivebaseSubsystem extends SubsystemBase{
         backRight = new PWMVictorSPX(1);
 
         //restoring factory defaults removes and changes such as inverts and follows so this should alwways be applied before hand
-
         backLeft.addFollower(frontLeft);
         backRight.addFollower(frontRight);
 
