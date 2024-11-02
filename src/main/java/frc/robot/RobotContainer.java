@@ -21,23 +21,22 @@ public class RobotContainer {
     robotDrive = new DrivebaseSubsystem();
     robotDispenser = new DispenserSubsystem();
     driveController = new CommandXboxController(0);    
-      /*
+
     robotDrive.setDefaultCommand(
       new DriveCommand(
         () -> -driveController.getLeftY(), 
         () -> -driveController.getRightX(), 
         robotDrive));
 
-    */
 
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-    driveController.rightTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(0.4);}, robotDispenser));
+    driveController.rightTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(0.05);}, robotDispenser));
     driveController.rightTrigger().onFalse(new InstantCommand(() -> {robotDispenser.setMotor(0);}, robotDispenser));
 
-    driveController.leftTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(-0.4);}, robotDispenser));
+    driveController.leftTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(-0.05);}, robotDispenser));
     driveController.leftTrigger().onFalse(new InstantCommand(() -> {robotDispenser.setMotor(0);}, robotDispenser));
   }
 

@@ -19,11 +19,12 @@ public class DispenserSubsystem extends SubsystemBase {
         dispenserMotor = new CANSparkMax(CandyDispenser.DISPENSER_ID, MotorType.kBrushless);
         dispenserEncoder = dispenserMotor.getEncoder();
 
+        dispenserMotor.restoreFactoryDefaults();
         dispenserMotor.setIdleMode(IdleMode.kBrake);
         dispenserMotor.setSmartCurrentLimit(CandyDispenser.DISPENSER_CURRENT_LIMIT);
-        // Set softlimit later
+
         dispenserMotor.setSoftLimit(SoftLimitDirection.kForward, 1);
-        dispenserMotor.setSoftLimit(SoftLimitDirection.kReverse, 1);
+        dispenserMotor.setSoftLimit(SoftLimitDirection.kReverse, 0);
         dispenserMotor.burnFlash();
 
         dispenserEncoder.setPosition(0);
