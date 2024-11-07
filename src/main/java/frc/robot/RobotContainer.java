@@ -3,19 +3,25 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import java.net.BindException;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DrivebaseSubsystem;
+import frc.robot.subsystems.DispenserSubsystem;
 
 public class RobotContainer {
   private DrivebaseSubsystem robotDrive; 
+  private DispenserSubsystem robotDispenser;
   private CommandXboxController driveController;
     public RobotContainer() {
     robotDrive = new DrivebaseSubsystem();
-    driveController = new CommandXboxController(0);
-    
+    robotDispenser = new DispenserSubsystem();
+    driveController = new CommandXboxController(0);    
 
     robotDrive.setDefaultCommand(
       new DriveCommand(
@@ -23,10 +29,13 @@ public class RobotContainer {
         () -> -driveController.getRightX(), 
         robotDrive));
 
-    configureBindings();
+    configureButtonBindings();
   }
 
-  private void configureBindings() {}
+  private void configureButtonBindings() {
+    driveController.leftTrigger().whileTrue(new DispenserCommand(robotDispenser, 0.9));
+    driveController.leftTrigger().whileFalse(new DispenserCommand(robotDispenser, 0.1));
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
