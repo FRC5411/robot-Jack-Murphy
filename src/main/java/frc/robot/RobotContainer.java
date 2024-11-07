@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.DrivebaseSubsystem;
 import frc.robot.subsystems.DispenserSubsystem;
@@ -28,16 +29,12 @@ public class RobotContainer {
         () -> -driveController.getRightX(), 
         robotDrive));
 
-
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-    driveController.rightTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(0.05);}, robotDispenser));
-    driveController.rightTrigger().onFalse(new InstantCommand(() -> {robotDispenser.setMotor(0);}, robotDispenser));
-
-    driveController.leftTrigger().onTrue(new InstantCommand(() -> {robotDispenser.setMotor(-0.05);}, robotDispenser));
-    driveController.leftTrigger().onFalse(new InstantCommand(() -> {robotDispenser.setMotor(0);}, robotDispenser));
+    driveController.leftTrigger().whileTrue(new DispenserCommand(robotDispenser, 0.9));
+    driveController.leftTrigger().whileFalse(new DispenserCommand(robotDispenser, 0.1));
   }
 
   public Command getAutonomousCommand() {
